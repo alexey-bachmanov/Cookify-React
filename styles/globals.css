@@ -1,0 +1,30 @@
+:root {
+  --primary-orange: #e76f51;
+  --secondary-orange: #f4a261;
+  --primary-yellow: #e9c46a;
+  --primary-blue: #264653;
+  --secondary-blue: #2a9d8f;
+
+  --color-foreground: var(--primary-yellow);
+  --color-foreground-hover: var(--secondary-orange)
+  --color-background: var(--primary-orange);
+  --color-text: var(--primary-blue);
+
+  --mobile-width: 720px;
+  --border-radius: 12px;
+}
+
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+
+html,
+body {
+  max-width: 100vw;
+  overflow-x: hidden;
+}
+h2 {
+  color: var(--color-text);
+}

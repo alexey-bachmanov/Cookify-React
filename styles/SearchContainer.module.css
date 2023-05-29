@@ -1,0 +1,29 @@
+.search-container {
+  height: 90vh;
+  border: 1px solid black;
+  border-radius: var(--border-radius);
+  position: fixed;
+  top: 10vh;
+  left: 0;
+  transition: all 1000ms;
+  /* overflow-y: scroll; */
+  display: flex;
+  flex-direction: column;
+}
+
+.hidden {
+  opacity: 0;
+  width: 720px;
+  margin: 0px auto;
+}
+
+.squished {
+  width: 30%;
+}
+
+.full {
+  width: 720px;
+}
+/* Add media query
+if < mobile width & !squished, set width to 100% 
+if < mobile width & squished, set width to 0 */
