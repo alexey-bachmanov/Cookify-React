@@ -57,15 +57,21 @@ const PaginationController: React.FC = function () {
 
   // build array of buttons: [<, curpage-2, curpg-1, curpg, curpg+1, curpg+2, >]
   const paginationButtonsJSX = [
-    <button key={'back'} onClick={ctx.decrPage}>
+    <button key={'back'} onClick={ctx.decrPage} className={styles.inactive}>
       {'<'}
     </button>,
+
     paginationButtons.map((page) => (
-      <button key={page} onClick={() => ctx.setPage(page)}>
+      <button
+        key={page}
+        className={page === ctx.currentPage ? styles.active : styles.inactive}
+        onClick={() => ctx.setPage(page)}
+      >
         {page}
       </button>
     )),
-    <button key={'fwd'} onClick={ctx.incrPage}>
+
+    <button key={'fwd'} onClick={ctx.incrPage} className={styles.inactive}>
       {'>'}
     </button>,
   ];

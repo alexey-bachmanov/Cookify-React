@@ -11,7 +11,6 @@
   font-weight: bold;
   color: var(--color-text);
   width: 100%;
-  background-color: var(--color-foreground);
   border: 1px solid rgba(0, 0, 0, 0.2);
 }
 
@@ -25,10 +24,13 @@
 
 .pagination-controller button:hover,
 .pagination-controller button:active {
-  background-color: var(--color-foreground-hover);
+  background: var(--fill-button-hover);
   cursor: pointer;
 }
 
 .active {
-  background-color: red;
+  background: var(--fill-button-hover);
+}
+.inactive {
+  background: var(--fill-button);
 }

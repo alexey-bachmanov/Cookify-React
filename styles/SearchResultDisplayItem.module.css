@@ -1,7 +1,7 @@
 .search-result-item {
   box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
   border-radius: var(--border-radius);
-  background-color: var(--color-foreground);
+  background: var(--fill-button);
   margin: 4px;
   min-height: 0;
   display: grid;
@@ -18,8 +18,13 @@
   border-radius: var(--border-radius);
 }
 
+.search-result-item h3 {
+  margin: 4px;
+}
+
 .search-result-item:hover,
 .search-result-item:active {
-  background-color: var(--color-foreground-hover);
+  background-color: var(--fill-button-hover);
   cursor: pointer;
+  transform: translateY(-1px);
 }
