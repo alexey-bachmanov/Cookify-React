@@ -1,0 +1,5 @@
+.recipe-instructions ol {
+  list-style-type: decimal;
+  list-style-position: outside;
+  padding-left: 18px;
+}

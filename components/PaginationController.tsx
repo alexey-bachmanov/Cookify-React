@@ -1,5 +1,6 @@
 import React, { useContext } from 'react';
 import UIContext from '@/stores/store';
+import styles from '../styles/PaginationController.module.css';
 
 const PaginationController: React.FC = function () {
   const ctx = useContext(UIContext);
@@ -69,7 +70,11 @@ const PaginationController: React.FC = function () {
     </button>,
   ];
 
-  return <div>{paginationButtonsJSX}</div>;
+  return (
+    <div className={styles['pagination-controller']}>
+      {paginationButtonsJSX}
+    </div>
+  );
 };
 
 export default PaginationController;

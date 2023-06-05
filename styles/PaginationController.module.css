@@ -1,0 +1,34 @@
+.pagination-controller {
+  margin: 4px;
+  justify-self: flex-end;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.pagination-controller button {
+  font-size: 1.1rem;
+  font-weight: bold;
+  color: var(--color-text);
+  width: 100%;
+  background-color: var(--color-foreground);
+  border: 1px solid rgba(0, 0, 0, 0.2);
+}
+
+.pagination-controller button:first-of-type {
+  border-radius: var(--border-radius) 0 0 var(--border-radius);
+}
+
+.pagination-controller button:last-of-type {
+  border-radius: 0 var(--border-radius) var(--border-radius) 0;
+}
+
+.pagination-controller button:hover,
+.pagination-controller button:active {
+  background-color: var(--color-foreground-hover);
+  cursor: pointer;
+}
+
+.active {
+  background-color: red;
+}

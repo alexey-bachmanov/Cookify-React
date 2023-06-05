@@ -1,0 +1,5 @@
+.ingredient-list ul {
+  list-style-type: disc;
+  list-style-position: outside;
+  padding-left: 18px;
+}

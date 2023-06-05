@@ -1,13 +1,42 @@
 .recipe-container {
   height: 90vh;
-  border: 1px solid black;
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
   border-radius: var(--border-radius);
   position: fixed;
   top: 10vh;
-  right: 0;
-  width: 70%;
+  right: var(--drawer-margins);
+  width: calc(70% - (1.5 * var(--drawer-margins)));
   transition: all 1000ms;
   overflow-y: scroll;
+  background-color: var(--color-midground);
+}
+
+.recipe-container::-webkit-scrollbar {
+  width: calc(var(--border-radius) * 2);
+}
+.recipe-container::-webkit-scrollbar-track {
+  background: var(--color-foreground);
+  border-radius: var(--border-radius);
+  box-shadow: inset 0 0 8px rgba(128, 128, 128, 0.5);
+}
+.recipe-container::-webkit-scrollbar-thumb {
+  background: rgba(128, 128, 128, 0.5);
+  border-radius: var(--border-radius);
+}
+
+.recipe-container h2,
+.recipe-container h3,
+.recipe-container p,
+.recipe-container ul,
+.recipe-container ol,
+.recipe-container img {
+  margin: 8px;
+}
+.recipe-container li {
+  margin: 8px;
+}
+.recipe-container img {
+  border-radius: var(--border-radius);
 }
 
 .hidden {

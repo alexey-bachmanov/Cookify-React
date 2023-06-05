@@ -34,16 +34,17 @@ const UIContextProvider = function ({
   const [numResults, setNumResults] = useState<number>(0);
   const [searchQuery, setSearchQuery] = useState<string>('');
   const [searchResults, setSearchResults] = useState<SearchResult[]>([]);
-  const [currentRecipeID, setCurrentRecipeID] = useState<number>(654797);
+  const [currentRecipeID, setCurrentRecipeID] = useState<number>(-1);
 
   // fetching function //
   const getRecipeList = async function (query: string, pageNum: number) {
     const response = await fetch(
       `/api/recipes?query=${query}&number=${ITEMSPERPAGE}&offset=${
-        pageNum * ITEMSPERPAGE
+        (pageNum - 1) * ITEMSPERPAGE
       }`
     );
     if (!response.ok) {
+      // catch 404 errors etc
       console.error('Failed to fetch reipes');
       return [null, null];
     }
@@ -65,7 +66,7 @@ const UIContextProvider = function ({
     const totalPages = Math.ceil(numResults / ITEMSPERPAGE);
     const [newResults, _] = await getRecipeList(
       searchQuery,
-      Math.max(1, currentPage - 1)
+      Math.min(currentPage + 1, totalPages)
     );
     setSearchResults(newResults);
     setCurrentPage((curPage) => Math.min(curPage + 1, totalPages));

@@ -17,6 +17,8 @@ const SearchResultDisplayItem: React.FC<{ item: SearchResult }> = function (
         src={props.item.image}
         width={100}
         height={100}
+        placeholder="blur"
+        blurDataURL={props.item.image}
         alt={props.item.title}
       />
       <h3>{props.item.title}</h3>

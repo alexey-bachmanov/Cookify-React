@@ -23,7 +23,6 @@ const SearchContainer: React.FC = function () {
 
   return (
     <div className={componentStyle}>
-      <h2>Search Container</h2>
       <SearchForm />
       <ul>{currentItemsJSX}</ul>
       <PaginationController />
