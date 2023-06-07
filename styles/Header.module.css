@@ -1,0 +1,45 @@
+.header {
+  color: var(--color-text);
+  transition: all var(--transition-time);
+  margin: auto var(--drawer-margins);
+}
+
+.mode0 {
+  position: fixed;
+  bottom: 60vh;
+  left: 50vw;
+  transform: translateX(-50%);
+}
+.mode1 {
+  position: fixed;
+  bottom: 95vh;
+  left: 50vw;
+  transform: translateX(-50%);
+}
+.mode2 {
+  position: fixed;
+  bottom: 95vh;
+  left: 0;
+  transform: translateX(0);
+}
+
+@media screen and (max-width: 768px) {
+  .mode0 {
+    position: fixed;
+    bottom: 60vh;
+    left: 50vw;
+    transform: translateX(-50%);
+  }
+  .mode1 {
+    position: fixed;
+    bottom: 95vh;
+    left: 50vw;
+    transform: translateX(-50%);
+  }
+  .mode2 {
+    position: fixed;
+    bottom: 95vh;
+    left: 50vw;
+    transform: translateX(-50%);
+  }
+}

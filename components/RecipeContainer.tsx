@@ -684,16 +684,19 @@ const RecipeContainer: React.FC = function () {
   }, [ctx.currentRecipeID]);
 
   // set styles //
-  const isShown = ctx.recipeDrawerShown;
   const componentStyle = `${styles['recipe-container']} ${
-    isShown ? '' : styles.hidden
+    styles['mode' + ctx.mode]
   }`;
 
   return (
     <div className={componentStyle}>
       {recipeData && (
         <>
-          <h2>{recipeData!.title}</h2>
+          <span>
+            <h2>{recipeData!.title}</h2>
+            <button onClick={() => ctx.setMode(1)}>Back</button>
+          </span>
+
           <Image
             src={recipeData!.image}
             width={480}

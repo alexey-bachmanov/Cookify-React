@@ -5,15 +5,13 @@ import { ContextShape, SearchResult } from '@/types/types';
 ///// create context /////
 const ITEMSPERPAGE = 8;
 const UIContext = React.createContext<ContextShape>({
-  searchDrawerShown: false,
-  recipeDrawerShown: false,
+  mode: 0,
   currentPage: 1,
   numResults: 0,
   itemsPerPage: 1,
   searchResults: [],
   currentRecipeID: 0,
-  showSearch: () => {},
-  showRecipe: () => {},
+  setMode: () => {},
   incrPage: () => {},
   decrPage: () => {},
   setPage: () => {},
@@ -28,8 +26,10 @@ const UIContextProvider = function ({
   children: React.ReactNode;
 }) {
   // state declarations //
-  const [searchDrawerShown, setSearchDrawerShown] = useState<boolean>(true);
-  const [recipeDrawerShown, setRecipeDrawerShown] = useState<boolean>(true);
+  const [mode, setMode] = useState<number>(0);
+  // mode 0: startup view, with only header and searchbar
+  // mode 1: search query entered, search result window expands
+  // mode 2: recipe clicked, recipe drawer showing
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [numResults, setNumResults] = useState<number>(0);
   const [searchQuery, setSearchQuery] = useState<string>('');
@@ -56,12 +56,6 @@ const UIContextProvider = function ({
   };
 
   // handler functions //
-  const showSearch = function () {
-    setSearchDrawerShown(true);
-  };
-  const showRecipe = function () {
-    setRecipeDrawerShown(true);
-  };
   const incrPage = async function () {
     const totalPages = Math.ceil(numResults / ITEMSPERPAGE);
     const [newResults, _] = await getRecipeList(
@@ -90,22 +84,22 @@ const UIContextProvider = function ({
     setNumResults(totalResults);
     setCurrentPage(1);
     setSearchQuery(query);
+    if (mode === 0) setMode(1);
   };
   const changeCurrentRecipe = function (recipeID: number) {
     setCurrentRecipeID(recipeID);
+    setMode(2);
   };
 
   // assemble context value
   const contextValue: ContextShape = {
-    searchDrawerShown,
-    recipeDrawerShown,
+    mode,
     currentPage,
     numResults,
     itemsPerPage: ITEMSPERPAGE,
     searchResults,
     currentRecipeID,
-    showSearch,
-    showRecipe,
+    setMode,
     incrPage,
     decrPage,
     setPage,

@@ -15,17 +15,16 @@ const SearchContainer: React.FC = function () {
   ));
 
   // determine styles
-  const isShown = ctx.searchDrawerShown;
-  const isSquished = ctx.recipeDrawerShown;
+  // className = 'searh-container mode0'
   const componentStyle = `${styles['search-container']} ${
-    isShown ? '' : styles.hidden
-  } ${isSquished ? styles.squished : styles.full}`;
+    styles['mode' + ctx.mode]
+  }`;
 
   return (
     <div className={componentStyle}>
       <SearchForm />
-      <ul>{currentItemsJSX}</ul>
-      <PaginationController />
+      {ctx.mode !== 0 && <ul>{currentItemsJSX}</ul>}
+      {ctx.mode !== 0 && <PaginationController />}
     </div>
   );
 };

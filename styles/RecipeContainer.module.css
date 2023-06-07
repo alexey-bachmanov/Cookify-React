@@ -1,12 +1,8 @@
 .recipe-container {
-  height: 90vh;
   box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
   border-radius: var(--border-radius);
-  position: fixed;
-  top: 10vh;
-  right: var(--drawer-margins);
-  width: calc(70% - (1.5 * var(--drawer-margins)));
-  transition: all 1000ms;
+
+  transition: all var(--transition-time);
   overflow-y: scroll;
   background: var(--fill-foreground);
 }
@@ -23,7 +19,19 @@
   background: var(--fill-scroll-thumb);
   border-radius: var(--border-radius);
 }
-
+.recipe-container span {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+.recipe-container button {
+  margin: 4px;
+  padding: 4px;
+  font-size: 1.1rem;
+  border-radius: var(--border-radius);
+  border: 1px solid rgba(0, 0, 0, 0.2);
+}
 .recipe-container h2,
 .recipe-container h3,
 .recipe-container p,
@@ -39,11 +47,71 @@
   border-radius: var(--border-radius);
 }
 
-.hidden {
+.mode0 {
   opacity: 0;
-  width: 0;
-  margin: 0px auto;
+  height: 95vh;
+  width: calc(70% - (1.5 * var(--drawer-margins)));
+  position: fixed;
+  top: 5vh;
+  right: 0;
+  transform: translateX(100%);
+}
+
+.mode1 {
+  opacity: 0;
+  height: 95vh;
+  width: calc(70% - (1.5 * var(--drawer-margins)));
+  position: fixed;
+  top: 5vh;
+  right: 0;
+  transform: translateX(100%);
+}
+
+.mode2 {
+  opacity: 1;
+  height: calc(95vh - var(--drawer-margins));
+  width: calc(70% - (1.5 * var(--drawer-margins)));
+  position: fixed;
+  top: 5vh;
+  right: var(--drawer-margins);
+  transform: translateX(0);
 }
 
 /* Add media query
 if < mobile width & shown, set width to 100% */
+@media screen and (max-width: 768px) {
+  .recipe-container img {
+    width: 100%;
+    height: auto;
+    margin: 0;
+  }
+  .mode0 {
+    opacity: 0;
+    height: 95vh;
+    width: calc(70% - (1.5 * var(--drawer-margins)));
+    position: fixed;
+    top: 5vh;
+    right: 0;
+    transform: translateX(100%);
+  }
+
+  .mode1 {
+    opacity: 0;
+    height: 95vh;
+    width: calc(100% - (2 * var(--drawer-margins)));
+    position: fixed;
+    top: 5vh;
+    right: 0;
+    transform: translateX(100%);
+  }
+
+  .mode2 {
+    opacity: 1;
+    height: calc(95vh - var(--drawer-margins));
+    width: calc(100% - (2 * var(--drawer-margins)));
+    position: fixed;
+    top: 5vh;
+    right: var(--drawer-margins);
+    transform: translateX(0);
+  }
+}

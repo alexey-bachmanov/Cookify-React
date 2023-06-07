@@ -1,18 +1,16 @@
 export type ContextShape = {
-  searchDrawerShown: boolean;
-  recipeDrawerShown: boolean;
+  mode: number;
   currentRecipeID: number;
   currentPage: number;
   itemsPerPage: number;
   searchResults: SearchResult[];
   numResults: number;
-  showSearch: () => void;
-  showRecipe: () => void;
+  setMode: (mode: number) => void;
   incrPage: () => void;
   decrPage: () => void;
-  setPage: (arg: number) => void;
-  newSearch: (arg: string) => void;
-  changeCurrentRecipe: (arg: number) => void;
+  setPage: (page: number) => void;
+  newSearch: (query: string) => void;
+  changeCurrentRecipe: (recipeID: number) => void;
 };
 
 export type SearchResult = {

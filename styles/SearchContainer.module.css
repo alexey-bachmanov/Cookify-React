@@ -1,11 +1,7 @@
 .search-container {
-  height: 90vh;
   box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
   border-radius: var(--border-radius);
-  position: fixed;
-  top: 10vh;
-  left: var(--drawer-margins);
-  transition: all 1000ms;
+  transition: all var(--transition-time);
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -39,19 +35,60 @@
   min-height: 0;
 }
 
-.hidden {
-  opacity: 0;
-  width: 720px;
-  margin: 0px auto;
+.mode0 {
+  height: 40px;
+  width: 500px;
+  position: fixed;
+  top: 40vh;
+  left: 50vw;
+  transform: translateX(-50%);
 }
 
-.squished {
+.mode1 {
+  height: calc(95vh - var(--drawer-margins));
+  width: 500px;
+  position: fixed;
+  top: 5vh;
+  left: 50vw;
+  transform: translateX(-50%);
+}
+
+.mode2 {
+  height: calc(95vh - var(--drawer-margins));
   width: calc(30% - 1.5 * var(--drawer-margins));
-}
-
-.full {
-  width: 720px;
+  position: fixed;
+  top: 5vh;
+  left: var(--drawer-margins);
+  transform: translateX(0);
 }
 /* Add media query
 if < mobile width & !squished, set width to 100% 
 if < mobile width & squished, set width to 0 */
+@media screen and (max-width: 768px) {
+  .mode0 {
+    opacity: 1;
+    width: calc(100% - 2 * var(--drawer-margins));
+    position: fixed;
+    top: 40vh;
+    left: var(--drawer-margins);
+    transform: translateX(0);
+  }
+  .mode1 {
+    opacity: 1;
+    height: calc(95vh - var(--drawer-margins));
+    width: calc(100% - 2 * var(--drawer-margins));
+    position: fixed;
+    top: 5vh;
+    left: var(--drawer-margins);
+    transform: translateX(0);
+  }
+  .mode2 {
+    opacity: 0;
+    height: calc(95vh - var(--drawer-margins));
+    width: calc(100% - 2 * var(--drawer-margins));
+    position: fixed;
+    top: 5vh;
+    left: 0;
+    transform: translateX(-100%);
+  }
+}
