@@ -9,7 +9,7 @@ export async function GET(req: Request, res: Response) {
 
   const response = await fetch(
     `https://api.spoonacular.com/recipes/complexSearch?apiKey=${apiKey}&${paramString}`,
-    { method: 'GET' }
+    { method: 'GET', headers: { 'Access-Control-Allow-Origin': '*' } }
   );
 
   // console.log(

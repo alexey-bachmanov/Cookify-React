@@ -11,7 +11,7 @@ export async function GET(req: Request, res: Response) {
   // fetch recipe details from spoonacular
   const response = await fetch(
     `https://api.spoonacular.com/recipes/${recipeID}/information?apiKey=${apiKey}&includeNutrition=false`,
-    { method: 'GET' }
+    { method: 'GET', headers: { 'Access-Control-Allow-Origin': '*' } }
   );
   return response;
 }
