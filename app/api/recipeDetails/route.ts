@@ -1,7 +1,7 @@
 // import { NextApiRequest, NextApiResponse } from 'next';
 
 export async function GET(req: Request, res: Response) {
-  const apiKey = process.env['SPOONACULAR_API_KEY'];
+  const apiKey = process.env.SPOONACULAR_API_KEY;
   // expected request url: /api/recipeDetails?recipeID=...
 
   // since req.query seems to be broken, parse query parameters from req.url
