@@ -1,6 +1,6 @@
-import { NextApiRequest, NextApiResponse } from 'next';
+// import { NextApiRequest, NextApiResponse } from 'next';
 
-export async function GET(req: NextApiRequest, res: NextApiResponse) {
+export async function GET(req: Request, res: Response) {
   const apiKey = process.env['SPOONACULAR_API_KEY'];
   // expected request url: /api/recipeDetails?recipeID=...
 
