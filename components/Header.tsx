@@ -9,7 +9,6 @@ const Header: React.FC = function (props: any) {
 
   // set classes //
   const componentStyle = `${styles['header']} ${styles['mode' + ctx.mode]}`;
-  console.log(componentStyle);
 
   return (
     <header className={componentStyle}>
