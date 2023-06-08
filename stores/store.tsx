@@ -43,6 +43,7 @@ const UIContextProvider = function ({
         (pageNum - 1) * ITEMSPERPAGE
       }`
     );
+    console.log(response);
     if (!response.ok) {
       // catch 404 errors etc
       console.error('Failed to fetch reipes');
