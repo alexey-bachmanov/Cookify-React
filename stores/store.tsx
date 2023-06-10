@@ -33,7 +33,9 @@ const UIContextProvider = function ({
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [numResults, setNumResults] = useState<number>(0);
   const [searchQuery, setSearchQuery] = useState<string>('');
-  const [searchResults, setSearchResults] = useState<SearchResult[]>([]);
+  // const [searchResults, setSearchResults] = useState<SearchResult[]>([]);
+  // EDIT ME //
+  const [searchResults, setSearchResults] = useState<any>([]);
   const [currentRecipeID, setCurrentRecipeID] = useState<number>(-1);
 
   // fetching function //
@@ -51,10 +53,13 @@ const UIContextProvider = function ({
     }
     const data = await response.text();
     console.log('body', data);
-    let newResults = data.results.map((result: any) => {
-      return { id: result.id, title: result.title, image: result.image };
-    });
-    return [newResults, data.totalResults];
+    // let newResults = data.results.map((result: any) => {
+    //   return { id: result.id, title: result.title, image: result.image };
+    // });
+    // return [newResults, data.totalResults];
+    // EDIT ME //
+    const fakeData: any = [];
+    return [fakeData, 1];
   };
 
   // handler functions //
