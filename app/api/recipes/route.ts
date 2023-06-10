@@ -13,6 +13,7 @@ export async function GET(req: Request, res: Response) {
       method: 'GET',
       headers: {
         'Access-Control-Allow-Origin': '*',
+        'Accept-Encoding': 'br',
       },
     }
   );

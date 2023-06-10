@@ -43,14 +43,14 @@ const UIContextProvider = function ({
         (pageNum - 1) * ITEMSPERPAGE
       }`
     );
-    console.log('response', response);
     console.log('headers', new Map(response.headers));
     if (!response.ok) {
       // catch 404 errors etc
       console.error('Failed to fetch reipes');
       return [null, null];
     }
-    const data = await response.json();
+    const data = await response.text();
+    console.log('body', data);
     let newResults = data.results.map((result: any) => {
       return { id: result.id, title: result.title, image: result.image };
     });
