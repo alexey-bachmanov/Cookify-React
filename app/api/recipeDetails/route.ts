@@ -1,4 +1,4 @@
-// import { NextApiRequest, NextApiResponse } from 'next';
+import { NextResponse } from 'next/server';
 
 export async function GET(req: Request, res: Response) {
   const apiKey = process.env.SPOONACULAR_API_KEY;
@@ -11,7 +11,17 @@ export async function GET(req: Request, res: Response) {
   // fetch recipe details from spoonacular
   const response = await fetch(
     `https://api.spoonacular.com/recipes/${recipeID}/information?apiKey=${apiKey}&includeNutrition=false`,
-    { method: 'GET', headers: { 'Access-Control-Allow-Origin': '*' } }
+    {
+      method: 'GET',
+      headers: {},
+    }
   );
-  return response;
+
+  // catch errors, like api quota running out
+  if (!response.ok) {
+    throw new Error('Failed to fetch recipe details');
+  }
+
+  const data = await response.json();
+  return NextResponse.json(data);
 }

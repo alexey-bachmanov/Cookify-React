@@ -33,9 +33,7 @@ const UIContextProvider = function ({
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [numResults, setNumResults] = useState<number>(0);
   const [searchQuery, setSearchQuery] = useState<string>('');
-  // const [searchResults, setSearchResults] = useState<SearchResult[]>([]);
-  // EDIT ME //
-  const [searchResults, setSearchResults] = useState<any>([]);
+  const [searchResults, setSearchResults] = useState<SearchResult[]>([]);
   const [currentRecipeID, setCurrentRecipeID] = useState<number>(-1);
 
   // fetching function //
@@ -45,21 +43,19 @@ const UIContextProvider = function ({
         (pageNum - 1) * ITEMSPERPAGE
       }`
     );
+    console.log('response', response);
     console.log('headers', new Map(response.headers));
     if (!response.ok) {
       // catch 404 errors etc
       console.error('Failed to fetch reipes');
       return [null, null];
     }
-    const data = await response.text();
+    const data = await response.json();
     console.log('body', data);
-    // let newResults = data.results.map((result: any) => {
-    //   return { id: result.id, title: result.title, image: result.image };
-    // });
-    // return [newResults, data.totalResults];
-    // EDIT ME //
-    const fakeData: any = [];
-    return [fakeData, 1];
+    let newResults = data.results.map((result: any) => {
+      return { id: result.id, title: result.title, image: result.image };
+    });
+    return [newResults, data.totalResults];
   };
 
   // handler functions //
