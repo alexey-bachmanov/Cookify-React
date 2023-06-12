@@ -8,11 +8,7 @@ export async function GET(req: Request, res: Response) {
   const [_, paramString] = req.url!.split('?');
 
   const response = await fetch(
-    `https://api.spoonacular.com/recipes/complexSearch?apiKey=${apiKey}&${paramString}`,
-    {
-      method: 'GET',
-      headers: {},
-    }
+    `https://api.spoonacular.com/recipes/complexSearch?apiKey=${apiKey}&${paramString}`
   );
 
   // catch errors, like api quota running out

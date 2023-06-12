@@ -1,12 +1,14 @@
 import '../styles/globals.css';
 import { UIContextProvider } from '@/stores/store';
 import { Inter } from 'next/font/google';
+import styles from '../styles/layout.module.css';
 
 const inter = Inter({ subsets: ['latin'] });
 
 export const metadata = {
   title: 'Cookify',
-  description: 'Find your next recipe here',
+  description:
+    'Search a clean and modern recipe database. Find your next recipe here.',
 };
 
 export default function RootLayout({
@@ -17,7 +19,9 @@ export default function RootLayout({
   return (
     <html lang="en">
       <UIContextProvider>
-        <body className={inter.className}>{children}</body>
+        <body className={`${inter.className} ${styles.layout}`}>
+          {children}
+        </body>
       </UIContextProvider>
     </html>
   );

@@ -1,32 +1,11 @@
 :root {
-  --red-100: #bc3810;
-  --red-200: #ce3e12;
-  --red-300: #e14414;
-  --red-400: #eb4e1e;
-  --red-500: #ec4e20;
-  --red-600: #ef6b43;
-  --red-700: #f07a56;
-  --red-800: #f28969;
-  --red-900: #f4987c;
-  --orange-100: #b86b00;
-  --orange-200: #cc7700;
-  --orange-300: #e08300;
-  --orange-400: #f58f00;
-  --orange-500: #ff9505;
-  --orange-600: #ffa21f;
-  --orange-700: #ffaa33;
-  --orange-800: #ffb347;
-  --orange-900: #ffbb5c;
-  --orange-1000: #ffc370;
-  --orange-1100: #ffcc85;
-  --olive-500: #353531;
-  --gray-400: #999;
-  --gray-500: #aaa;
-  --gray-600: #bbb;
-  --gray-700: #ccc;
-  --gray-800: #ddd;
-  --gray-900: #eee;
-  --gray-1000: #fff;
+  --gray-400: hsl(0, 7%, 60%);
+  --gray-500: hsl(0, 7%, 67%);
+  --gray-600: hsl(0, 7%, 73%);
+  --gray-700: hsl(0, 7%, 80%);
+  --gray-800: hsl(0, 7%, 87%);
+  --gray-900: hsl(0, 7%, 93%);
+  --gray-1000: hsl(0, 7%, 97%);
 
   --fill-foreground: linear-gradient(
     to bottom right,
@@ -40,8 +19,8 @@
   );
   --fill-background: linear-gradient(
     to bottom right,
-    var(--gray-1000),
-    var(--gray-800)
+    var(--gray-900),
+    var(--gray-700)
   );
 
   --fill-button: var(--gray-900);
@@ -51,10 +30,15 @@
   --fill-scroll-thumb: var(--gray-900);
   --color-text: black;
 
-  --mobile-width: 768px;
   --border-radius: 8px;
-  --drawer-margins: 12px;
   --transition-time: 800ms;
+
+  --drawer-margins: 10px;
+  --title-bottom: 95dvh;
+  --title-bottom-splash: 60dvh;
+  --desktop-height: calc(var(--title-bottom) - var(--drawer-margins));
+  --mobile-height: calc(100dvh - 2 * var(--drawer-margins));
+  --mobile-width: calc(100dvw - 2 * var(--drawer-margins));
 }
 
 * {
@@ -62,15 +46,10 @@
   padding: 0;
   margin: 0;
 }
-
-html,
-body {
-  width: 100vw;
-  height: 100vh;
+html {
+  height: 100dvh;
+  width: 100dvw;
   overflow-x: hidden;
+  overflow-y: hidden;
   background: var(--fill-background);
-}
-h2,
-h3 {
-  color: var(--color-text);
 }

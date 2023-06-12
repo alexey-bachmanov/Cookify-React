@@ -10,11 +10,7 @@ export async function GET(req: Request, res: Response) {
 
   // fetch recipe details from spoonacular
   const response = await fetch(
-    `https://api.spoonacular.com/recipes/${recipeID}/information?apiKey=${apiKey}&includeNutrition=false`,
-    {
-      method: 'GET',
-      headers: {},
-    }
+    `https://api.spoonacular.com/recipes/${recipeID}/information?apiKey=${apiKey}&includeNutrition=false`
   );
 
   // catch errors, like api quota running out
