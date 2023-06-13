@@ -11,6 +11,9 @@ const UIContext = React.createContext<ContextShape>({
   itemsPerPage: 1,
   searchResults: [],
   currentRecipeID: 0,
+  searchIsLoading: false,
+  recipeIsLoading: false,
+  setRecipeIsLoading: () => {},
   setMode: () => {},
   incrPage: () => {},
   decrPage: () => {},
@@ -35,9 +38,12 @@ const UIContextProvider = function ({
   const [searchQuery, setSearchQuery] = useState<string>('');
   const [searchResults, setSearchResults] = useState<SearchResult[]>([]);
   const [currentRecipeID, setCurrentRecipeID] = useState<number>(-1);
+  const [searchIsLoading, setSearchIsLoading] = useState<boolean>(false);
+  const [recipeIsLoading, setRecipeIsLoading] = useState<boolean>(false);
 
   // fetching function //
   const getRecipeList = async function (query: string, pageNum: number) {
+    setSearchIsLoading(true);
     const response = await fetch(
       `/api/recipes?query=${query}&number=${ITEMSPERPAGE}&offset=${
         (pageNum - 1) * ITEMSPERPAGE
@@ -52,6 +58,7 @@ const UIContextProvider = function ({
     let newResults = data.results.map((result: any) => {
       return { id: result.id, title: result.title, image: result.image };
     });
+    setSearchIsLoading(false);
     return [newResults, data.totalResults];
   };
 
@@ -99,6 +106,9 @@ const UIContextProvider = function ({
     itemsPerPage: ITEMSPERPAGE,
     searchResults,
     currentRecipeID,
+    searchIsLoading,
+    recipeIsLoading,
+    setRecipeIsLoading,
     setMode,
     incrPage,
     decrPage,

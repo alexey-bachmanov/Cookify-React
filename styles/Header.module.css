@@ -4,17 +4,17 @@
 }
 
 .mode0 {
-  bottom: var(--title-bottom-splash);
+  top: calc(100dvh - var(--title-bottom-splash) - 40px);
   left: 50vw;
   transform: translateX(-50%);
 }
 .mode1 {
-  bottom: var(--title-bottom);
+  top: calc(100dvh - var(--title-bottom) - 40px);
   left: 50vw;
   transform: translateX(-50%);
 }
 .mode2 {
-  bottom: var(--title-bottom);
+  top: calc(100dvh - var(--title-bottom) - 40px);
   left: var(--drawer-margins);
   transform: translateX(0);
 }

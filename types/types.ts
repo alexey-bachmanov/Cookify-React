@@ -5,6 +5,9 @@ export type ContextShape = {
   itemsPerPage: number;
   searchResults: SearchResult[];
   numResults: number;
+  searchIsLoading: boolean;
+  recipeIsLoading: boolean;
+  setRecipeIsLoading: (isLoading: boolean) => void;
   setMode: (mode: number) => void;
   incrPage: () => void;
   decrPage: () => void;

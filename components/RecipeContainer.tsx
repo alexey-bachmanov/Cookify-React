@@ -8,6 +8,7 @@ import { RecipeDetails } from '@/types/types';
 import RecipeSummary from './RecipeContainer/RecipeSummary';
 import RecipeIngredientList from './RecipeContainer/ReccipeIngredientList';
 import RecipeInstructionList from './RecipeContainer/RecipeInstructionList';
+import LoadingSpinner from './LoadingSpinner';
 
 const initRecipe: RecipeDetails = {
   vegetarian: false,
@@ -667,6 +668,7 @@ const RecipeContainer: React.FC = function () {
   // pull recipe info off spoonacular with useEffect //
   useEffect(() => {
     const getRecipeDetails = async function (recipeID: number) {
+      ctx.setRecipeIsLoading(true);
       const response = await fetch(
         `/api/recipeDetails?recipeID=${ctx.currentRecipeID}`
       );
@@ -676,9 +678,11 @@ const RecipeContainer: React.FC = function () {
       }
       const data = await response.json();
       setRecipeData(data);
+      ctx.setRecipeIsLoading(false);
     };
     if (ctx.currentRecipeID > 0) {
       // don't ask for recipe details when recipeID = -1 at start
+
       getRecipeDetails(ctx.currentRecipeID);
     }
   }, [ctx.currentRecipeID]);
@@ -688,28 +692,31 @@ const RecipeContainer: React.FC = function () {
     styles['mode' + ctx.mode]
   }`;
 
+  // JSX for contents to show when loaded
+  const contentsJSX = recipeData && (
+    <>
+      <span>
+        <h2>{recipeData!.title}</h2>
+        <button onClick={() => ctx.setMode(1)}>Back</button>
+      </span>
+
+      <Image
+        src={recipeData!.image}
+        width={480}
+        height={300}
+        placeholder="blur"
+        blurDataURL={recipeData!.image}
+        alt={recipeData!.title}
+      />
+      <RecipeSummary recipeDetails={recipeData} />
+      <RecipeIngredientList recipeDetails={recipeData} />
+      <RecipeInstructionList recipeDetails={recipeData} />
+    </>
+  );
+
   return (
     <div className={componentStyle}>
-      {recipeData && (
-        <>
-          <span>
-            <h2>{recipeData!.title}</h2>
-            <button onClick={() => ctx.setMode(1)}>Back</button>
-          </span>
-
-          <Image
-            src={recipeData!.image}
-            width={480}
-            height={300}
-            placeholder="blur"
-            blurDataURL={recipeData!.image}
-            alt={recipeData!.title}
-          />
-          <RecipeSummary recipeDetails={recipeData} />
-          <RecipeIngredientList recipeDetails={recipeData} />
-          <RecipeInstructionList recipeDetails={recipeData} />
-        </>
-      )}
+      {ctx.recipeIsLoading ? <LoadingSpinner /> : contentsJSX}
     </div>
   );
 };

@@ -5,6 +5,8 @@
   overflow-y: scroll;
   background: var(--fill-foreground);
   position: fixed;
+  display: flex;
+  flex-direction: column;
 }
 
 .recipe-container::-webkit-scrollbar {

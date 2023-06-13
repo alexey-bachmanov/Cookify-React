@@ -37,7 +37,7 @@
 }
 
 .mode0 {
-  height: 40px;
+  height: fit-content;
   width: 500px;
   top: calc(100dvh - var(--title-bottom-splash));
   left: 50vw;
@@ -64,7 +64,7 @@
 @media screen and (max-width: 768px) {
   .mode0 {
     opacity: 1;
-    height: 40px;
+    height: fit-content;
     width: var(--mobile-width);
     top: calc(100dvh - var(--title-bottom-splash));
     left: var(--drawer-margins);

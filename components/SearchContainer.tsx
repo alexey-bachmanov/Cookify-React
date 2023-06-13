@@ -5,6 +5,7 @@ import SearchForm from './SearchForm';
 import PaginationController from './PaginationController';
 import SearchResultDisplayItem from './SearchResultDisplayItem';
 import styles from '../styles/SearchContainer.module.css';
+import LoadingSpinner from './LoadingSpinner';
 
 const SearchContainer: React.FC = function () {
   const ctx = useContext(UIContext);
@@ -23,7 +24,8 @@ const SearchContainer: React.FC = function () {
   return (
     <div className={componentStyle}>
       <SearchForm />
-      {ctx.mode !== 0 && <ul>{currentItemsJSX}</ul>}
+      {ctx.searchIsLoading && <LoadingSpinner />}
+      {ctx.mode !== 0 && !ctx.searchIsLoading && <ul>{currentItemsJSX}</ul>}
       {ctx.mode !== 0 && <PaginationController />}
     </div>
   );
