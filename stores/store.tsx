@@ -3,11 +3,12 @@ import React, { useState } from 'react';
 import { ContextShape, RecipeDetails, SearchResult } from '@/types/types';
 
 ///// pull bookmarks from localStorage /////
-let initBookmarks: SearchResult[];
-if (localStorage.getItem('cookify-bookmarks')) {
-  initBookmarks = JSON.parse(localStorage.getItem('cookify-bookmarks')!);
-} else {
-  initBookmarks = [];
+let initBookmarks: SearchResult[] = [];
+if (typeof window != undefined) {
+  // so next.js doesn't throw errors on SSR
+  if (localStorage.getItem('cookify-bookmarks')) {
+    initBookmarks = JSON.parse(localStorage.getItem('cookify-bookmarks')!);
+  }
 }
 ///// create context /////
 const ITEMSPERPAGE = 8;
