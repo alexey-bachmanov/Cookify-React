@@ -39,7 +39,7 @@ const PaginationController: React.FC = function () {
   // ];
 
   ///// CONTROL REQUESTS TO AN API /////
-  const totalPages = Math.ceil(ctx.numResults / ctx.itemsPerPage);
+  const totalPages = Math.ceil(ctx.currentNumResults / ctx.itemsPerPage);
 
   // pagination buttons JSX //
   const numButtons = 4; // number of buttons to each side of current page

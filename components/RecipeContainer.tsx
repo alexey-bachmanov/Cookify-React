@@ -90,8 +90,8 @@ const RecipeContainer: React.FC = function () {
       <Image
         className={styles['main-image']}
         src={recipeData!.image}
-        width={480}
-        height={300}
+        width={556}
+        height={370}
         placeholder="blur"
         blurDataURL={recipeData!.image}
         alt={recipeData!.title}

@@ -108,24 +108,19 @@ const UIContextProvider = function ({
   // pagination handlers //
   const incrPage = async function () {
     const totalPages = Math.ceil(currentNumResults / ITEMSPERPAGE);
-    const { newResults } = await getRecipeList(
-      searchQuery,
-      Math.min(currentPage + 1, totalPages)
-    );
-    setSearchResults(newResults);
-    setCurrentPage((curPage) => Math.min(curPage + 1, totalPages));
+    setPage(Math.min(currentPage + 1, totalPages));
   };
   const decrPage = async function () {
-    const { newResults } = await getRecipeList(
-      searchQuery,
-      Math.max(1, currentPage - 1)
-    );
-    setSearchResults(newResults);
-    setCurrentPage((curPage) => Math.max(1, curPage - 1));
+    setPage(Math.max(1, currentPage - 1));
   };
   const setPage = async function (pageNum: number) {
-    const { newResults } = await getRecipeList(searchQuery, pageNum);
-    setSearchResults(newResults);
+    if (isInBookmarkMode) {
+      const { newResults } = getBookmarkedRecipeList(pageNum);
+      setSearchResults(newResults);
+    } else {
+      const { newResults } = await getRecipeList(searchQuery, pageNum);
+      setSearchResults(newResults);
+    }
     setCurrentPage(pageNum);
   };
 
