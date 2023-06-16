@@ -9,25 +9,6 @@
   position: fixed;
 }
 
-.search-container form {
-  margin: 4px;
-  display: flex;
-  flex-direction: row;
-}
-.search-container form input {
-  padding: 4px;
-  width: 100%;
-  font-size: 1.1rem;
-  border-radius: var(--border-radius) 0 0 var(--border-radius);
-  border: 1px solid rgba(0, 0, 0, 0.2);
-}
-.search-container form button {
-  padding: 4px;
-  font-size: 1.1rem;
-  border-radius: 0 var(--border-radius) var(--border-radius) 0;
-  border: 1px solid rgba(0, 0, 0, 0.2);
-}
-
 .search-container ul {
   list-style: none;
   height: 100%;

@@ -1,25 +1,52 @@
 'use client';
 import React, { useState } from 'react';
-import { ContextShape, SearchResult } from '@/types/types';
+import { ContextShape, RecipeDetails, SearchResult } from '@/types/types';
 
+const initBookmarks = [
+  {
+    id: 654959,
+    title: 'Pasta With Tuna',
+    image: 'https://spoonacular.com/recipeImages/654959-312x231.jpg',
+  },
+  {
+    id: 511728,
+    title: 'Pasta Margherita',
+    image: 'https://spoonacular.com/recipeImages/511728-312x231.jpg',
+  },
+  {
+    id: 654857,
+    title: 'Pasta On The Border',
+    image: 'https://spoonacular.com/recipeImages/654857-312x231.jpg',
+  },
+  {
+    id: 654883,
+    title: 'Pasta Vegetable Soup',
+    image: 'https://spoonacular.com/recipeImages/654883-312x231.jpg',
+  },
+];
 ///// create context /////
 const ITEMSPERPAGE = 8;
 const UIContext = React.createContext<ContextShape>({
   mode: 0,
-  currentPage: 1,
-  numResults: 0,
-  itemsPerPage: 1,
-  searchResults: [],
   currentRecipeID: 0,
+  currentPage: 1,
+  itemsPerPage: 1,
+  currentNumResults: 0,
+  searchResults: [],
+  bookmarkList: [],
   searchIsLoading: false,
   recipeIsLoading: false,
-  setRecipeIsLoading: () => {},
+  isInBookmarkMode: false,
   setMode: () => {},
+  newSearch: () => {},
+  changeCurrentRecipe: () => {},
   incrPage: () => {},
   decrPage: () => {},
   setPage: () => {},
-  newSearch: () => {},
-  changeCurrentRecipe: () => {},
+  setRecipeIsLoading: () => {},
+  toggleBookmarkMode: () => {},
+  addBookmark: () => {},
+  removeBookmark: () => {},
 });
 
 ///// create context provider /////
@@ -34,12 +61,15 @@ const UIContextProvider = function ({
   // mode 1: search query entered, search result window expands
   // mode 2: recipe clicked, recipe drawer showing
   const [currentPage, setCurrentPage] = useState<number>(1);
-  const [numResults, setNumResults] = useState<number>(0);
+  const [currentNumResults, setCurrentNumResults] = useState<number>(0);
   const [searchQuery, setSearchQuery] = useState<string>('');
   const [searchResults, setSearchResults] = useState<SearchResult[]>([]);
+  const [bookmarkList, setBookmarkList] =
+    useState<SearchResult[]>(initBookmarks);
   const [currentRecipeID, setCurrentRecipeID] = useState<number>(-1);
   const [searchIsLoading, setSearchIsLoading] = useState<boolean>(false);
   const [recipeIsLoading, setRecipeIsLoading] = useState<boolean>(false);
+  const [isInBookmarkMode, setIsInBookmarkMode] = useState<boolean>(false);
 
   // fetching function //
   const getRecipeList = async function (query: string, pageNum: number) {
@@ -52,20 +82,33 @@ const UIContextProvider = function ({
     if (!response.ok) {
       // catch 404 errors etc
       console.error('Failed to fetch reipes');
-      return [null, null];
+      const newResults: SearchResult[] = [];
+      const numResults: number = 0;
+      return { newResults, numResults };
     }
     const data = await response.json();
-    let newResults = data.results.map((result: any) => {
+    const newResults: SearchResult[] = data.results.map((result: any) => {
       return { id: result.id, title: result.title, image: result.image };
     });
+    const numResults: number = data.totalResults;
     setSearchIsLoading(false);
-    return [newResults, data.totalResults];
+    return { newResults, numResults };
   };
 
-  // handler functions //
+  // bookmark 'fetching' function //
+  const getBookmarkedRecipeList = function (pageNum: number) {
+    const newResults = bookmarkList.slice(
+      Math.max(0, (pageNum - 1) * ITEMSPERPAGE),
+      pageNum * ITEMSPERPAGE
+    );
+    const numResults = bookmarkList.length;
+    return { newResults, numResults };
+  };
+
+  // pagination handlers //
   const incrPage = async function () {
-    const totalPages = Math.ceil(numResults / ITEMSPERPAGE);
-    const [newResults, _] = await getRecipeList(
+    const totalPages = Math.ceil(currentNumResults / ITEMSPERPAGE);
+    const { newResults } = await getRecipeList(
       searchQuery,
       Math.min(currentPage + 1, totalPages)
     );
@@ -73,7 +116,7 @@ const UIContextProvider = function ({
     setCurrentPage((curPage) => Math.min(curPage + 1, totalPages));
   };
   const decrPage = async function () {
-    const [newResults, _] = await getRecipeList(
+    const { newResults } = await getRecipeList(
       searchQuery,
       Math.max(1, currentPage - 1)
     );
@@ -81,40 +124,113 @@ const UIContextProvider = function ({
     setCurrentPage((curPage) => Math.max(1, curPage - 1));
   };
   const setPage = async function (pageNum: number) {
-    const [newResults, _] = await getRecipeList(searchQuery, pageNum);
+    const { newResults } = await getRecipeList(searchQuery, pageNum);
     setSearchResults(newResults);
     setCurrentPage(pageNum);
   };
+
+  // misc. handler functions //
   const newSearch = async function (query: string) {
-    const [newResults, totalResults] = await getRecipeList(query, 1);
+    const { newResults, numResults } = await getRecipeList(query, 1);
     setSearchResults(newResults);
-    setNumResults(totalResults);
+    setCurrentNumResults(numResults);
     setCurrentPage(1);
     setSearchQuery(query);
+    setIsInBookmarkMode(false);
     if (mode === 0) setMode(1);
   };
   const changeCurrentRecipe = function (recipeID: number) {
     setCurrentRecipeID(recipeID);
     setMode(2);
   };
+  const toggleBookmarkMode = async function () {
+    // make sure search results are open
+    if (mode === 0) setMode(1);
+    // set search results to page 1 bookmark slice
+    if (!isInBookmarkMode) {
+      setCurrentPage(1);
+      const { newResults, numResults } = getBookmarkedRecipeList(1);
+      setSearchResults(newResults);
+      setCurrentNumResults(numResults);
+    }
+    if (isInBookmarkMode) {
+      setCurrentPage(1);
+      const { newResults, numResults } = await getRecipeList(searchQuery, 1);
+      setSearchResults(newResults);
+      setCurrentNumResults(numResults);
+    }
+    setIsInBookmarkMode((mode) => !mode);
+  };
+  const addBookmark = function (recipeData: RecipeDetails) {
+    const newBookmark: SearchResult = {
+      id: recipeData!.id,
+      title: recipeData!.title,
+      image: `https://spoonacular.com/recipeImages/${
+        recipeData!.id
+      }-312x231.jpg`,
+    };
+    const newBookmarkList = [newBookmark, ...bookmarkList];
+    setBookmarkList(newBookmarkList);
+    // update search results, if bookmarked recipes are shown
+    if (isInBookmarkMode) {
+      const newResults = newBookmarkList.slice(
+        Math.max(0, (currentPage - 1) * ITEMSPERPAGE),
+        currentPage * ITEMSPERPAGE
+      );
+      const numResults = newBookmarkList.length;
+      setSearchResults(newResults);
+      setCurrentNumResults(numResults);
+    }
+  };
+  const removeBookmark = function (recipeData: RecipeDetails) {
+    const bookmarkIndex = bookmarkList.findIndex(
+      (element) => element.id === recipeData!.id
+    );
+    const newBookmarkList = [
+      ...bookmarkList.slice(0, bookmarkIndex),
+      ...bookmarkList.slice(bookmarkIndex + 1),
+    ];
+    setBookmarkList(newBookmarkList);
+    // update search results, if bookmarked recipes are shown
+    if (isInBookmarkMode) {
+      // handle deleting the last element on a page
+      // 1 < pageNum < Math.ceil( (numResults-1) / ITEMSPERPAGE )
+      const newPageNum = Math.max(
+        1,
+        Math.min(currentPage, Math.ceil((currentNumResults - 1) / ITEMSPERPAGE))
+      );
+      const newResults = newBookmarkList.slice(
+        Math.max(0, (newPageNum - 1) * ITEMSPERPAGE),
+        newPageNum * ITEMSPERPAGE
+      );
+      const numResults = newBookmarkList.length;
+      setSearchResults(newResults);
+      setCurrentNumResults(numResults);
+    }
+  };
 
   // assemble context value
   const contextValue: ContextShape = {
     mode,
-    currentPage,
-    numResults,
-    itemsPerPage: ITEMSPERPAGE,
-    searchResults,
     currentRecipeID,
+    currentPage,
+    itemsPerPage: ITEMSPERPAGE,
+    currentNumResults,
+    searchResults,
+    bookmarkList,
     searchIsLoading,
     recipeIsLoading,
-    setRecipeIsLoading,
+    isInBookmarkMode,
     setMode,
+    newSearch,
+    changeCurrentRecipe,
     incrPage,
     decrPage,
     setPage,
-    newSearch,
-    changeCurrentRecipe,
+    setRecipeIsLoading,
+    toggleBookmarkMode,
+    addBookmark,
+    removeBookmark,
   };
 
   return (

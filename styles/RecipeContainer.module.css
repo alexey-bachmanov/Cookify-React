@@ -21,32 +21,46 @@
   background: var(--fill-scroll-thumb);
   border-radius: var(--border-radius);
 }
-.recipe-container span {
+.recipe-container button {
+  padding: 4px;
+  font-size: 1.1rem;
+  border: 1px solid rgba(0, 0, 0, 0.2);
+}
+.heading {
   display: flex;
   justify-content: space-between;
   align-items: center;
   width: 100%;
 }
-.recipe-container button {
-  margin: 4px;
-  padding: 4px;
-  font-size: 1.1rem;
-  border-radius: var(--border-radius);
-  border: 1px solid rgba(0, 0, 0, 0.2);
+.button-container {
+  display: flex;
+  flex-direction: row;
 }
+.button-back {
+  border-radius: var(--border-radius) 0 0 var(--border-radius);
+}
+.button-bookmark {
+  border-radius: 0 var(--border-radius) var(--border-radius) 0;
+  display: flex;
+  flex-direction: row;
+}
+.button-bookmark img {
+  margin: 0;
+}
+
 .recipe-container h2,
 .recipe-container h3,
 .recipe-container p,
 .recipe-container ul,
 .recipe-container ol,
-.recipe-container img {
+.main-image {
   margin: 8px;
+}
+.main-image {
+  border-radius: var(--border-radius);
 }
 .recipe-container li {
   margin: 8px;
-}
-.recipe-container img {
-  border-radius: var(--border-radius);
 }
 
 .mode0 {
@@ -78,7 +92,7 @@
 
 /* Mobile version */
 @media screen and (max-width: 768px) {
-  .recipe-container img {
+  .main-image {
     width: 100%;
     height: auto;
     margin: 0;

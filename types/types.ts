@@ -1,19 +1,31 @@
 export type ContextShape = {
+  // basic info
   mode: number;
   currentRecipeID: number;
   currentPage: number;
   itemsPerPage: number;
+  currentNumResults: number;
+  // lists
   searchResults: SearchResult[];
-  numResults: number;
+  bookmarkList: SearchResult[];
+  // mode switches
   searchIsLoading: boolean;
   recipeIsLoading: boolean;
-  setRecipeIsLoading: (isLoading: boolean) => void;
+  isInBookmarkMode: boolean;
+  // basic handlers
   setMode: (mode: number) => void;
+  newSearch: (query: string) => void;
+  changeCurrentRecipe: (recipeID: number) => void;
+  // pagination handling
   incrPage: () => void;
   decrPage: () => void;
   setPage: (page: number) => void;
-  newSearch: (query: string) => void;
-  changeCurrentRecipe: (recipeID: number) => void;
+  // loading state handling
+  setRecipeIsLoading: (isLoading: boolean) => void;
+  // bookmark handling
+  toggleBookmarkMode: () => void;
+  addBookmark: (recipeData: RecipeDetails) => void;
+  removeBookmark: (recipeData: RecipeDetails) => void;
 };
 
 export type SearchResult = {
