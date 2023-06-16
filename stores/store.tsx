@@ -2,28 +2,13 @@
 import React, { useState } from 'react';
 import { ContextShape, RecipeDetails, SearchResult } from '@/types/types';
 
-const initBookmarks = [
-  {
-    id: 654959,
-    title: 'Pasta With Tuna',
-    image: 'https://spoonacular.com/recipeImages/654959-312x231.jpg',
-  },
-  {
-    id: 511728,
-    title: 'Pasta Margherita',
-    image: 'https://spoonacular.com/recipeImages/511728-312x231.jpg',
-  },
-  {
-    id: 654857,
-    title: 'Pasta On The Border',
-    image: 'https://spoonacular.com/recipeImages/654857-312x231.jpg',
-  },
-  {
-    id: 654883,
-    title: 'Pasta Vegetable Soup',
-    image: 'https://spoonacular.com/recipeImages/654883-312x231.jpg',
-  },
-];
+///// pull bookmarks from localStorage /////
+let initBookmarks: SearchResult[];
+if (localStorage.getItem('cookify-bookmarks')) {
+  initBookmarks = JSON.parse(localStorage.getItem('cookify-bookmarks')!);
+} else {
+  initBookmarks = [];
+}
 ///// create context /////
 const ITEMSPERPAGE = 8;
 const UIContext = React.createContext<ContextShape>({
@@ -176,6 +161,7 @@ const UIContextProvider = function ({
       setSearchResults(newResults);
       setCurrentNumResults(numResults);
     }
+    localStorage.setItem('cookify-bookmarks', JSON.stringify(newBookmarkList));
   };
   const removeBookmark = function (recipeData: RecipeDetails) {
     const bookmarkIndex = bookmarkList.findIndex(
@@ -202,6 +188,7 @@ const UIContextProvider = function ({
       setSearchResults(newResults);
       setCurrentNumResults(numResults);
     }
+    localStorage.setItem('cookify-bookmarks', JSON.stringify(newBookmarkList));
   };
 
   // assemble context value
