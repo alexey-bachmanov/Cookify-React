@@ -1,15 +1,7 @@
 'use client';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { ContextShape, RecipeDetails, SearchResult } from '@/types/types';
 
-///// pull bookmarks from localStorage /////
-let initBookmarks: SearchResult[] = [];
-if (typeof window != undefined) {
-  // so next.js doesn't throw errors on SSR
-  if (localStorage.getItem('cookify-bookmarks')) {
-    initBookmarks = JSON.parse(localStorage.getItem('cookify-bookmarks')!);
-  }
-}
 ///// create context /////
 const ITEMSPERPAGE = 8;
 const UIContext = React.createContext<ContextShape>({
@@ -50,12 +42,19 @@ const UIContextProvider = function ({
   const [currentNumResults, setCurrentNumResults] = useState<number>(0);
   const [searchQuery, setSearchQuery] = useState<string>('');
   const [searchResults, setSearchResults] = useState<SearchResult[]>([]);
-  const [bookmarkList, setBookmarkList] =
-    useState<SearchResult[]>(initBookmarks);
+  const [bookmarkList, setBookmarkList] = useState<SearchResult[]>([]);
   const [currentRecipeID, setCurrentRecipeID] = useState<number>(-1);
   const [searchIsLoading, setSearchIsLoading] = useState<boolean>(false);
   const [recipeIsLoading, setRecipeIsLoading] = useState<boolean>(false);
   const [isInBookmarkMode, setIsInBookmarkMode] = useState<boolean>(false);
+
+  // useEffect to pull bookmarks from localStorage
+  // used to dodge build errors from next.js
+  useEffect(() => {
+    if (localStorage.getItem('cookify-bookmarks')) {
+      setBookmarkList(JSON.parse(localStorage.getItem('cookify-bookmarks')!));
+    }
+  }, []);
 
   // fetching function //
   const getRecipeList = async function (query: string, pageNum: number) {
